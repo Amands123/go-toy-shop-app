@@ -3,7 +3,7 @@ kind: Ingress
 
 metadata:
   name: go-toy-shop
-  namespace: toyshop
+  namespace:
 
 spec:
   rules:
