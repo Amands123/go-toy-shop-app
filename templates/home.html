@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Toy Shop</title>
+    <title>Toy Categories</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 
@@ -19,15 +19,9 @@
 
         <h2>{{.Name}}</h2>
 
-        <h3>Category: {{.Category}}</h3>
-
-        <p>{{.Description}}</p>
-
-        <h3>{{.Price}}</h3>
-
-        <a href="/add-to-cart?id={{.ID}}">
+        <a href="/toys?category={{.Name}}">
             <button style="padding:10px 15px; cursor:pointer;">
-                Add To Cart
+                View Products
             </button>
         </a>
 

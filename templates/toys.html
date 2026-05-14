@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>All Toys</title>
+    <title>Products</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
+
 <body>
 
-<h1>Available Toys</h1>
+<h1>Products</h1>
 
 <div class="container">
 
@@ -25,7 +26,9 @@
         <h3>{{.Price}}</h3>
 
         <a href="/add-to-cart?id={{.ID}}">
-            <button>Add To Cart</button>
+            <button style="padding:10px 15px; cursor:pointer;">
+                Add To Cart
+            </button>
         </a>
 
     </div>

@@ -5,6 +5,11 @@ import (
 	"net/http"
 )
 
+type Category struct {
+	Name  string
+	Image string
+}
+
 type Toy struct {
 	ID          int
 	Name        string
@@ -12,6 +17,25 @@ type Toy struct {
 	Price       string
 	Description string
 	Image       string
+}
+
+var categories = []Category{
+	{
+		Name:  "Teddy",
+		Image: "/static/images/teddy.jpg",
+	},
+	{
+		Name:  "Robot",
+		Image: "/static/images/robot.jpg",
+	},
+	{
+		Name:  "Car",
+		Image: "/static/images/car.jpg",
+	},
+	{
+		Name:  "Lego",
+		Image: "/static/images/lego.jpg",
+	},
 }
 
 var toys = []Toy{
@@ -55,14 +79,25 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	tmpl := template.Must(template.ParseFiles("templates/home.html"))
 
-	tmpl.Execute(w, toys)
+	tmpl.Execute(w, categories)
 }
 
 func ToysHandler(w http.ResponseWriter, r *http.Request) {
 
+	category := r.URL.Query().Get("category")
+
+	var filteredToys []Toy
+
+	for _, toy := range toys {
+
+		if toy.Category == category {
+			filteredToys = append(filteredToys, toy)
+		}
+	}
+
 	tmpl := template.Must(template.ParseFiles("templates/toys.html"))
 
-	tmpl.Execute(w, toys)
+	tmpl.Execute(w, filteredToys)
 }
 
 func AddToCartHandler(w http.ResponseWriter, r *http.Request) {
@@ -102,7 +137,9 @@ func PlaceOrderHandler(w http.ResponseWriter, r *http.Request) {
 
 	cart = nil
 
-	w.Write([]byte("Order Placed Successfully"))
+	tmpl := template.Must(template.ParseFiles("templates/order-success.html"))
+
+	tmpl.Execute(w, nil)
 }
 
 func AboutHandler(w http.ResponseWriter, r *http.Request) {
