@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<h1>Your Cart</h1>
+
+<div class="container">
+
+    {{range .}}
+
+    <div class="card">
+
+        <img src="{{.Image}}" width="200">
+
+        <h2>{{.Name}}</h2>
+
+        <p>{{.Description}}</p>
+
+        <h3>{{.Price}}</h3>
+
+    </div>
+
+    {{end}}
+
+</div>
+
+<div style="text-align:center; margin-top:20px;">
+
+    <a href="/place-order">
+
+        <button style="padding:10px 20px; font-size:18px;">
+            Place Order
+        </button>
+
+    </a>
+
+</div>
+
+</body>
+</html>
