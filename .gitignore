@@ -1,0 +1,14 @@
+# Binaries
+*.exe
+*.out
+*.app
+
+# Go
+vendor/
+bin/
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store

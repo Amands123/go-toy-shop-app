@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Toy Shop</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<h1>Welcome to Happy Kids Toy Shop</h1>
+
+<div class="container">
+    {{range .}}
+    <div class="card">
+        <img src="{{.Image}}" width="200">
+        <h2>{{.Name}}</h2>
+        <p>{{.Description}}</p>
+        <h3>{{.Price}}</h3>
+    </div>
+    {{end}}
+</div>
+
+</body>
+</html>
