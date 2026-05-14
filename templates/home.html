@@ -1,21 +1,40 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Toy Shop</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
+
 <body>
 
 <h1>Welcome to Happy Kids Toy Shop</h1>
 
 <div class="container">
+
     {{range .}}
+
     <div class="card">
+
         <img src="{{.Image}}" width="200">
+
         <h2>{{.Name}}</h2>
+
+        <h3>Category: {{.Category}}</h3>
+
         <p>{{.Description}}</p>
+
         <h3>{{.Price}}</h3>
+
+        <a href="/add-to-cart?id={{.ID}}">
+            <button style="padding:10px 15px; cursor:pointer;">
+                Add To Cart
+            </button>
+        </a>
+
     </div>
+
     {{end}}
+
 </div>
 
 </body>
