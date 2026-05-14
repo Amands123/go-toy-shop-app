@@ -1,0 +1,22 @@
+# This is a sample deployment manifest file for a simple web application.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-toy-shop
+  labels:
+    app: go-toy-shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-toy-shop
+  template:
+    metadata:
+      labels:
+        app: go-toy-shop
+    spec:
+      containers:
+      - name: go-toy-shop
+        image: hephaestus4i/go-toy-shop:{{ .Values.image.tag }}
+        ports:
+        - containerPort: 8080
