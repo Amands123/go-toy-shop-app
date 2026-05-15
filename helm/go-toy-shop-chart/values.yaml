@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: hephaestus4i/go-toy-shop
-  tag: "25913232454"
+  tag: "25913551382"
   pullPolicy: IfNotPresent
 
 
