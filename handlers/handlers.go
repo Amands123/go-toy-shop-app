@@ -79,7 +79,11 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	tmpl := template.Must(template.ParseFiles("templates/home.html"))
 
-	tmpl.Execute(w, categories)
+	err := tmpl.Execute(w, categories)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func ToysHandler(w http.ResponseWriter, r *http.Request) {
@@ -97,7 +101,11 @@ func ToysHandler(w http.ResponseWriter, r *http.Request) {
 
 	tmpl := template.Must(template.ParseFiles("templates/toys.html"))
 
-	tmpl.Execute(w, filteredToys)
+	err := tmpl.Execute(w, filteredToys)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func AddToCartHandler(w http.ResponseWriter, r *http.Request) {
@@ -130,7 +138,11 @@ func CartHandler(w http.ResponseWriter, r *http.Request) {
 
 	tmpl := template.Must(template.ParseFiles("templates/cart.html"))
 
-	tmpl.Execute(w, cart)
+	err := tmpl.Execute(w, cart)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func PlaceOrderHandler(w http.ResponseWriter, r *http.Request) {
@@ -139,19 +151,31 @@ func PlaceOrderHandler(w http.ResponseWriter, r *http.Request) {
 
 	tmpl := template.Must(template.ParseFiles("templates/order-success.html"))
 
-	tmpl.Execute(w, nil)
+	err := tmpl.Execute(w, nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func AboutHandler(w http.ResponseWriter, r *http.Request) {
 
 	tmpl := template.Must(template.ParseFiles("templates/about.html"))
 
-	tmpl.Execute(w, nil)
+	err := tmpl.Execute(w, nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func ContactHandler(w http.ResponseWriter, r *http.Request) {
 
 	tmpl := template.Must(template.ParseFiles("templates/contact.html"))
 
-	tmpl.Execute(w, nil)
+	err := tmpl.Execute(w, nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
