@@ -1,6 +1,7 @@
 # Happy Kids Toy Shop Application
 
-<img width="1360" height="685" alt="image" src="https://github.com/user-attachments/assets/938f912b-b47b-4970-a6a0-ccd6c2129e10" />
+<img width="1362" height="627" alt="image" src="https://github.com/user-attachments/assets/d2d2097b-a4dc-474c-af01-064ad0320eb1" />
+
 
 
 A Toy Shop web application built using Go (Golang) where users can browse toy categories, view products, add products to cart, and place orders.
