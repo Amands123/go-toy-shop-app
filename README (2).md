@@ -2,6 +2,9 @@
 
 # 🧸 Go Toy Shop
 
+<img width="1362" height="627" alt="image" src="https://github.com/user-attachments/assets/82471fc0-5e22-4702-baab-63014c1579e8" />
+
+
 ### End-to-End DevOps Project
 
 *A production-grade Go web application with automated CI/CD pipeline using GitHub Actions, SonarQube, Docker, Helm, and ArgoCD on Kubernetes*
