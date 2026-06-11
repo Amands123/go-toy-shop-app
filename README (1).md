@@ -26,6 +26,7 @@
 > This is **DevSecOps** done right.
 
 ---
+<img width="1366" height="590" alt="image" src="https://github.com/user-attachments/assets/45a26798-244d-4c44-9fd3-d50a0a0cdfa1" />
 
 <div align="center">
 
