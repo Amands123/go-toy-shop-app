@@ -2,14 +2,33 @@
 
 # 🧸 Go Toy Shop
 
-<img width="1362" height="627" alt="image" src="https://github.com/user-attachments/assets/82471fc0-5e22-4702-baab-63014c1579e8" />
+<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=00ADD8&center=true&vCenter=true&width=600&lines=End-to-End+DevSecOps+Project;Build+%7C+Scan+%7C+Deploy+%7C+Monitor;GitHub+Actions+%2B+ArgoCD+%2B+GitOps" alt="Typing SVG" />
 
+</div>
 
-### End-to-End DevOps Project
+---
 
-*A production-grade Go web application with automated CI/CD pipeline using GitHub Actions, SonarQube, Docker, Helm, and ArgoCD on Kubernetes*
+<div align="center">
 
-<br/>
+## 🔐 Secure. Automated. Observable. Production-Ready.
+
+</div>
+
+> This project is not just about deploying an application.
+> It is about building the **entire delivery system** around it —
+> a system where code is automatically **tested**, **quality-checked**, **scanned for vulnerabilities**,
+> **containerised**, **deployed without human intervention**, and **monitored in real time**.
+>
+> Every commit triggers a hardened pipeline that enforces security at three layers —
+> source code, container image, and runtime infrastructure —
+> before a single pod is updated on the cluster.
+>
+> This is **DevSecOps** done right.
+
+---
+<img width="1366" height="590" alt="image" src="https://github.com/user-attachments/assets/45a26798-244d-4c44-9fd3-d50a0a0cdfa1" />
+
+<div align="center">
 
 [![Go](https://img.shields.io/badge/Go-1.24-00ADD8?style=for-the-badge&logo=go&logoColor=white)](https://golang.org)
 [![Docker](https://img.shields.io/badge/Docker-Distroless-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/hephaestus4i/go-toy-shop)
@@ -17,7 +36,10 @@
 [![Helm](https://img.shields.io/badge/Helm-v3-0F1689?style=for-the-badge&logo=helm&logoColor=white)](https://helm.sh)
 [![CI](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/Amands123/go-toy-shop-app/actions)
 [![CD](https://img.shields.io/badge/CD-ArgoCD-EF7B4D?style=for-the-badge&logo=argo&logoColor=white)](https://argo-cd.readthedocs.io)
-[![SonarQube](https://img.shields.io/badge/SCA-SonarQube-4E9BCD?style=for-the-badge&logo=sonarqube&logoColor=white)](https://www.sonarsource.com)
+[![SonarQube](https://img.shields.io/badge/SAST-SonarQube-4E9BCD?style=for-the-badge&logo=sonarqube&logoColor=white)](https://www.sonarsource.com)
+[![Trivy](https://img.shields.io/badge/Image_Scan-Trivy-1904DA?style=for-the-badge&logo=aquasecurity&logoColor=white)](https://trivy.dev)
+[![Prometheus](https://img.shields.io/badge/Metrics-Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)](https://prometheus.io)
+[![Grafana](https://img.shields.io/badge/Dashboards-Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white)](https://grafana.com)
 
 </div>
 
@@ -25,34 +47,57 @@
 
 ## 📑 Table of Contents
 
-- [CI/CD Architecture](#-cicd-architecture)
+- [Project Overview](#-project-overview)
+- [DevSecOps Architecture](#-devsecops-architecture)
 - [Project Structure](#-project-structure)
+- [Security Layers](#-security-layers)
 - [Prerequisites](#-prerequisites)
   - [Install ArgoCD](#-install-argocd)
   - [Install SonarQube](#-install-sonarqube)
+  - [Install Prometheus + Grafana](#-install-prometheus--grafana)
 - [CI Pipeline — GitHub Actions](#-ci-pipeline--github-actions)
 - [CD Pipeline — ArgoCD](#-cd-pipeline--argocd)
+- [Monitoring — Prometheus + Grafana](#-monitoring--prometheus--grafana)
 - [Local Development](#-local-development)
 - [Application Routes](#-application-routes)
 
 ---
 
-## 🏗️ CI/CD Architecture
+## 🎯 Project Overview
+
+| Layer | Tool | Purpose |
+|---|---|---|
+| **Application** | Go 1.24 | Lightweight stateless web app |
+| **Containerisation** | Docker + Distroless | Minimal, secure runtime image |
+| **CI Pipeline** | GitHub Actions | Automates build, test, scan, push |
+| **Code Quality** | SonarQube (self-hosted) | SAST, SCA, coverage, quality gate |
+| **Image Security** | Trivy | Scans Docker image for CVEs |
+| **Image Registry** | DockerHub | Stores versioned Docker images |
+| **CD Pipeline** | ArgoCD | GitOps-based deployment to K8s |
+| **Packaging** | Helm v3 | Kubernetes application packaging |
+| **Orchestration** | Kubernetes (GKE) | Container runtime & scaling |
+| **Monitoring** | Prometheus + Grafana | Metrics collection & dashboards |
+
+---
+
+## 🏗️ DevSecOps Architecture
 
 ```mermaid
+
 flowchart TD
     DEV(["👨‍💻 Developer\ngit push to main"])
-    GH(["🐙 GitHub Repository\ngo-toy-shop-app"])
-
+    GH(["🐙 GitHub Repository"])
     DEV -->|git push| GH
 
-    subgraph CI ["⚙️  GitHub Actions — Continuous Integration"]
+    subgraph CI ["⚙️ GitHub Actions — CI Pipeline"]
         direction TB
-        A["① Build & Test\ngo build + go test\nGenerates coverage.out"]
-        B["② SonarQube Scan\nSAST · SCA · Coverage Report\nQuality Gate Check"]
-        C["③ Push Docker Image\nBuild & push to DockerHub\nTag = github.run_id"]
-        D["④ Update Helm Chart\nsed new image tag into\nhelm/values.yaml + git commit"]
-        A --> B --> C --> D
+        A["① Build & Test\ngo build · go test\ncoverage.out generated"]
+        B["② SonarQube Scan\nSAST · SCA · Quality Gate\nBlocks pipeline if gate fails"]
+        C["③ Build Docker Image\nMulti-stage · Distroless\nLoaded locally for scanning"]
+        D["④ Trivy Image Scan\nCVE scan · CRITICAL & HIGH\nReport uploaded as artifact"]
+        E["⑤ Push to DockerHub\nTagged with github.run_id\nImmutable · Traceable"]
+        F["⑥ Update Helm Chart\nNew image tag → values.yaml\nAuto-committed to Git"]
+        A --> B --> C --> D --> E --> F
     end
 
     GH --> CI
@@ -61,25 +106,33 @@ flowchart TD
     DH(["🐋 DockerHub\nhephaestus4i/go-toy-shop\n:run_id"])
 
     B <-->|scan + quality gate| SQ
-    C -->|push image| DH
+    E -->|push image| DH
 
-    subgraph CD ["🔄  ArgoCD — Continuous Deployment"]
-        ARGO["🟠 ArgoCD\nWatches helm/ in GitHub repo\nAuto-syncs on every commit"]
-    end
-
-    D -->|git commit detected| CD
-
-    subgraph K8S ["☸️  Kubernetes Cluster — GKE"]
+    subgraph K8S ["☸️ Kubernetes Cluster — GKE"]
         direction TB
-        ING["🌐 Ingress\n/ → service : 80"]
-        SVC["🔀 Service ClusterIP\nport 80 → 8080"]
-        DEP["📋 Deployment\n2 Replicas"]
-        P1["🟢 Pod 1\ngo-toy-shop : run_id"]
-        P2["🟢 Pod 2\ngo-toy-shop : run_id"]
-        ING --> SVC --> DEP --> P1 & P2
+
+        subgraph TOOLS ["🛠️ Platform Tools"]
+            ARGO["🟠 ArgoCD\nGitOps CD · port 80"]
+            PROM["🔴 Prometheus\nMetrics scraping · port 9090"]
+            GRAF["🟡 Grafana\nDashboards · port 80"]
+            SQK["🔵 SonarQube\nCode quality · port 9000"]
+            PROM -->|visualise| GRAF
+        end
+
+        subgraph APP ["🧸 Go Toy Shop"]
+            ING["🌐 Ingress\n/ → service:80"]
+            SVC["🔀 Service ClusterIP\nport 80 → 8080"]
+            DEP["📋 Deployment · 2 Replicas"]
+            P1["🟢 Pod 1\ngo-toy-shop:run_id"]
+            P2["🟢 Pod 2\ngo-toy-shop:run_id"]
+            ING --> SVC --> DEP --> P1 & P2
+        end
+
+        PROM -->|scrape metrics| APP
     end
 
-    CD -->|helm sync| K8S
+    F -->|commit detected| ARGO
+    ARGO -->|helm sync| DEP
     DH -->|image pull| P1 & P2
 
     USER(["🌍 User"]) -->|HTTP| ING
@@ -122,9 +175,6 @@ go-toy-shop-app/
 │           └── ingress.yaml
 │
 ├── k8s/manifests/                   # Raw Kubernetes manifests
-│   ├── deployment.yaml
-│   ├── service.yaml
-│   └── ingress.yaml
 │
 └── .github/
     └── workflows/
@@ -133,17 +183,39 @@ go-toy-shop-app/
 
 ---
 
+## 🔐 Security Layers
+
+```
+Layer 1 — Source Code        SonarQube SAST/SCA
+                              Scans Go code for vulnerabilities,
+                              code smells, and security hotspots.
+                              Quality Gate must PASS to proceed.
+                                      ↓
+Layer 2 — Container Image    Trivy CVE Scanner
+                              Scans built Docker image for
+                              OS and dependency vulnerabilities.
+                              Report saved as pipeline artifact.
+                                      ↓
+Layer 3 — Runtime            Distroless Base Image
+                              No shell. No package manager.
+                              Minimal attack surface in production.
+                                      ↓
+Layer 4 — Config Drift       ArgoCD Self-Heal
+                              Any manual cluster change is
+                              automatically reverted to match Git.
+```
+
+---
+
 ## ✅ Prerequisites
 
-Before running the CI/CD pipeline, the following must already be set up on your cluster:
-
-| Requirement | Status |
+| Requirement | Details |
 |---|---|
-| GKE Cluster (or any K8s cluster) | Must be running |
-| `kubectl` configured | Must point to your cluster |
-| `helm` v3 installed | Required for chart installs |
-| ArgoCD installed on cluster | See steps below |
-| SonarQube installed on cluster | See steps below |
+| GKE Cluster | Must be running with `kubectl` configured |
+| Helm v3 | Required for all tool installations |
+| ArgoCD | Installed on cluster — see steps below |
+| SonarQube | Installed on cluster — see steps below |
+| Prometheus + Grafana | Installed on cluster — see steps below |
 
 ---
 
@@ -156,10 +228,10 @@ kubectl create namespace argocd
 # 2. Install ArgoCD
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
-# 3. Expose ArgoCD UI externally
+# 3. Expose UI externally
 kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
 
-# 4. Get external IP  (wait ~30s for IP to be assigned)
+# 4. Get external IP
 kubectl get svc argocd-server -n argocd
 
 # 5. Get admin password
@@ -167,15 +239,12 @@ kubectl -n argocd get secret argocd-initial-admin-secret \
   -o jsonpath="{.data.password}" | base64 -d; echo
 ```
 
-> 🌐 Access UI at `http://<EXTERNAL-IP>` &nbsp;|&nbsp; Login: `admin` / `<password from step 5>`
+> 🌐 `http://<EXTERNAL-IP>` &nbsp;|&nbsp; Login: `admin` / `<password from step 5>`
 
----
-
-### Configure ArgoCD to watch your Helm chart
-
-Create `argocd-app.yaml` at the root of your repo:
+### Connect ArgoCD to your repo
 
 ```yaml
+# argocd-app.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -200,8 +269,6 @@ spec:
 kubectl apply -f argocd-app.yaml
 ```
 
-> ArgoCD now watches `helm/go-toy-shop-chart/` and **auto-syncs every time CI commits a new image tag** into `values.yaml`
-
 ---
 
 ## 🔵 Install SonarQube
@@ -210,35 +277,31 @@ kubectl apply -f argocd-app.yaml
 # 1. Create namespace
 kubectl create namespace sonarqube
 
-# 2. Add SonarQube Helm repo
+# 2. Add Helm repo
 helm repo add sonarqube https://SonarSource.github.io/helm-chart-sonarqube
 helm repo update
 
-# 3. Install SonarQube (Community Edition)
+# 3. Install SonarQube Community Edition
 helm install sonarqube sonarqube/sonarqube -n sonarqube \
   --set monitoringPasscode="admin123" \
   --set community.enabled=true
 
-# 4. Wait until pod is Running  (takes 2-3 mins due to Elasticsearch)
+# 4. Wait until Running  (takes 2-3 mins due to Elasticsearch)
 kubectl get pods -n sonarqube -w
 
-# 5. Expose SonarQube UI externally
+# 5. Expose UI externally
 kubectl patch svc sonarqube-sonarqube -n sonarqube -p '{"spec": {"type": "LoadBalancer"}}'
 
 # 6. Get external IP
 kubectl get svc sonarqube-sonarqube -n sonarqube
 ```
 
-> 🌐 Access UI at `http://<EXTERNAL-IP>:9000` &nbsp;|&nbsp; Login: `admin` / `admin` *(you'll be prompted to change it)*
+> 🌐 `http://<EXTERNAL-IP>:9000` &nbsp;|&nbsp; Login: `admin` / `admin`
 
----
-
-### Generate SonarQube token for CI
+### Generate token for CI
 
 ```
-1. Login → My Account → Security
-2. Generate Token → name it "github-actions"
-3. Copy the token
+Login → My Account → Security → Generate Token → copy value
 ```
 
 Add `sonar-project.properties` at repo root:
@@ -256,80 +319,157 @@ sonar.language=go
 
 ---
 
+## 📊 Install Prometheus + Grafana
+
+```bash
+# 1. Create namespace
+kubectl create namespace monitoring
+
+# 2. Add Helm repo
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+
+# 3. Install kube-prometheus-stack (Prometheus + Grafana + Alertmanager)
+helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack \
+  --namespace monitoring \
+  --set grafana.adminPassword="admin123" \
+  --set grafana.service.type=LoadBalancer \
+  --set prometheus.prometheusSpec.retention=15d
+
+# 4. Watch pods come up
+kubectl get pods -n monitoring -w
+
+# 5. Get Grafana external IP
+kubectl get svc -n monitoring | grep grafana
+
+# 6. Expose Prometheus externally (optional)
+kubectl patch svc kube-prometheus-stack-prometheus -n monitoring \
+  -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl get svc kube-prometheus-stack-prometheus -n monitoring
+```
+
+> 🌐 Grafana: `http://<EXTERNAL-IP>` &nbsp;|&nbsp; Login: `admin` / `admin123`
+> 🌐 Prometheus: `http://<EXTERNAL-IP>:9090`
+
+### Pre-built Grafana dashboards to import
+
+```
+Dashboards → Import → Enter ID → Load
+```
+
+| Dashboard | ID | Shows |
+|---|---|---|
+| Kubernetes Cluster | `7249` | Node CPU, memory, disk |
+| Kubernetes Pods | `6417` | Per-pod resource usage |
+| Kubernetes Deployments | `8588` | Deployment health & restarts |
+| Go Application | `10826` | Go runtime metrics |
+
+### Enable Prometheus scraping for your app
+
+Add to `helm/go-toy-shop-chart/templates/deployment.yaml`:
+
+```yaml
+spec:
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+```
+
+---
+
 ## ⚙️ CI Pipeline — GitHub Actions
 
-> Triggered on every push to `main` — ignores changes to `helm/`, `k8s/`, `README.md`
+> Triggered on every push to `main` — ignores `helm/`, `k8s/`, `README.md`
 
 ```
 push to main
     │
     ▼
-① build           ─── go mod tidy → go build → go test -coverprofile=coverage.out
-    │                  Uploads coverage.out as artifact
+① build              go mod tidy → go build → go test → upload coverage.out
+    │
     ▼
-② code-quality    ─── Downloads coverage.out
-    │                  Runs SonarQube scan against self-hosted SonarQube
-    │                  Quality Gate must PASS to continue
+② code-quality       SonarQube SAST/SCA scan + Quality Gate
+    │                 ✗ Gate fails → pipeline stops, nothing ships
     ▼
-③ push            ─── Docker build (multi-stage → distroless)
-    │                  Push to DockerHub: hephaestus4i/go-toy-shop:<github.run_id>
+③ push               Build Docker image locally (push: false, load: true)
+    │                 Trivy scans local image for CVEs
+    │                 Report uploaded as artifact
+    │                 Push clean image to DockerHub with :run_id tag
     ▼
-④ update-helm     ─── sed image tag into helm/go-toy-shop-chart/values.yaml
-                       git commit & push → triggers ArgoCD sync
+④ update-helm        sed new image tag into helm/values.yaml
+                      git commit & push → triggers ArgoCD sync
 ```
 
-### Pipeline job dependency
+### Job dependency chain
 
-| Job | Needs | Runs on |
+| Job | Needs | Security gate |
 |---|---|---|
-| `build` | — | every push |
-| `code-quality` | `build` | every push |
-| `push` | `code-quality` ✅ quality gate | every push |
-| `update-newtag-in-helm-chart` | `push` | every push |
-
-> 🔒 Docker image is only published if **SonarQube quality gate passes**
+| `build` | — | Tests must pass |
+| `code-quality` | `build` | SonarQube quality gate must pass |
+| `push` | `code-quality` | Trivy scan runs before push |
+| `update-newtag-in-helm-chart` | `push` | Image must be scanned and pushed |
 
 ### Required GitHub Secrets
 
 | Secret | Where to get it |
 |---|---|
-| `SONAR_TOKEN` | SonarQube → My Account → Security → Generate Token |
+| `SONAR_TOKEN` | SonarQube → My Account → Security |
 | `SONAR_HOST_URL` | `http://<sonarqube-external-ip>:9000` |
 | `DOCKERHUB_USERNAME` | Your DockerHub username |
 | `DOCKERHUB_TOKEN` | DockerHub → Account Settings → Security |
-| `TOKEN` | GitHub → Settings → Developer Settings → Personal Access Token |
+| `TOKEN` | GitHub → Settings → Developer Settings → PAT |
 
 ---
 
 ## 🔄 CD Pipeline — ArgoCD
 
-ArgoCD is the only CD mechanism — **no `helm upgrade` in the CI pipeline**.
+> ArgoCD is the **only** CD mechanism. No `helm upgrade` in CI.
 
 ```
 CI commits new image tag to helm/values.yaml
             │
             ▼
-ArgoCD detects change in repo  (polls every 3 minutes)
+ArgoCD detects commit  (polls every 3 mins)
             │
             ▼
-ArgoCD runs helm sync → Kubernetes rolling update
+Runs helm sync → rolling update on cluster
             │
             ▼
 New pods pull updated image from DockerHub
-Old pods terminated after new pods are healthy
+Old pods terminate after health checks pass
+            │
+            ▼
+selfHeal: true → any manual cluster change
+is automatically reverted to match Git
 ```
 
 ### Monitor deployments
 
 ```bash
-# Watch ArgoCD sync status
 kubectl get applications -n argocd
-
-# Watch pod rollout
 kubectl get pods -w
-
-# Check current image tag running
 kubectl describe pod -l app=go-toy-shop | grep Image
+```
+
+---
+
+## 📈 Monitoring — Prometheus + Grafana
+
+```
+Prometheus scrapes metrics from:
+  ├── go-toy-shop pods      (app metrics on :8080/metrics)
+  ├── Node Exporter         (CPU, memory, disk per node)
+  ├── kube-state-metrics    (pod restarts, deployment health)
+  └── Kubernetes components (API server, scheduler, etcd)
+            │
+            ▼
+Grafana visualises everything via dashboards
+            │
+            ▼
+Alertmanager fires alerts when thresholds are breached
 ```
 
 ---
@@ -350,7 +490,7 @@ go run main.go
 go test ./... -v
 go test ./... -cover
 
-# Build Docker image
+# Docker
 docker build -t go-toy-shop:local .
 docker run -p 8080:8080 go-toy-shop:local
 ```
@@ -373,6 +513,11 @@ docker run -p 8080:8080 go-toy-shop:local
 
 <div align="center">
 
+### 🔐 Build it. Secure it. Ship it. Watch it.
+
 **Made with ❤️ by [Aman Agarwal](https://github.com/Amands123)**
+
+[![GitHub](https://img.shields.io/badge/GitHub-Amands123-181717?style=flat-square&logo=github)](https://github.com/Amands123)
+[![DockerHub](https://img.shields.io/badge/DockerHub-hephaestus4i-2496ED?style=flat-square&logo=docker&logoColor=white)](https://hub.docker.com/u/hephaestus4i)
 
 </div>
